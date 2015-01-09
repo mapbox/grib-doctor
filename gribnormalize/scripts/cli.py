@@ -1,15 +1,14 @@
 import click
-
-import fliparr
+import cut_splice_globewrap as csg
 
 @click.group()
 def cli():
     pass
 
 @click.command('unwrap')
-@click.argument('ingrib', type=str)
-@click.argument('outraster', type=str)
-def unwrap(ingrib, outraster):
-    fliparr.upwrap_raster(ingrib, outraster)
+@click.argument('inputgrib', type=str)
+@click.argument('output', type=str)
+def unwrap(inputgrib, output):
+    csg.upwrap_raster(inputgrib, output)
 
 cli.add_command(unwrap)
