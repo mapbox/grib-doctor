@@ -21,9 +21,3 @@ def updateBoundsAffine(inAffine):
          inAffine.d,inAffine.e / 2.0, inAffine.f)
 
     return outAffine, bounds
-
-
-def doThis(yo, hey):
-    import click
-    for i in range(hey):
-        click.echo(yo)
