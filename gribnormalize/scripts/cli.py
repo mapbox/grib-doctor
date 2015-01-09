@@ -1,13 +1,15 @@
-# Skeleton of a CLI
-
 import click
 
-import gribnormalize
+import fliparr
 
+@click.group()
+def cli():
+    pass
 
-@click.command('gribnormalize')
-@click.argument('count', type=int, metavar='N')
-def cli(count):
-    """Echo a value `N` number of times"""
-    for i in range(count):
-        click.echo(gribnormalize.has_legs)
+@click.command('unwrap')
+@click.argument('ingrib', type=str)
+@click.argument('outraster', type=str)
+def unwrap(ingrib, outraster):
+    fliparr.upwrap_raster(ingrib, outraster)
+
+cli.add_command(unwrap)
