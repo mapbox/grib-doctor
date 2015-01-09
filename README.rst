@@ -1,70 +1,12 @@
 gribnormalize
-======
+=============
 
-.. image:: https://travis-ci.org/mapbox/gribnormalize.svg
-   :target: https://travis-ci.org/mapbox/gribnormalize
+Utility functions for handling quirks of weather data rasters in `grib2` format
 
-.. image:: https://coveralls.io/repos/mapbox/gribnormalize/badge.png
-   :target: https://coveralls.io/r/mapbox/gribnormalize
+.. role:: console(code)
+   :language: console
 
-A skeleton of a Python package with CLI and test suite included.
-   
-.. image:: https://farm4.staticflickr.com/3951/15672691531_3037819613_o_d.png
+Usage
+-----
 
-Customization quick start
--------------------------
-
-To use gribnormalize as the start of a new project, do the following, preferably in
-a virtual environment. Clone the repo.
-
-.. code-block:: console
-
-    git clone https://github.com/mapbox/gribnormalize myproject
-    cd myproject
-
-Replace all occurrences of 'gribnormalize' with the name of your own project.
-(Note: the commands below require bash, find, and sed and are yet tested only on OS X.)
-
-.. code-block:: console
-
-    if [ -d gribnormalize ]; then find . -not -path './.git*' -type f -exec sed -i '' -e 's/gribnormalize/myproject/g' {} + ; fi
-    mv gribnormalize myproject
-
-Then install in locally editable (``-e``) mode and run the tests.
-
-.. code-block:: console
-
-    pip install -e .[test]
-    py.test
-
-Finally, give the command line program a try.
-
-.. code-block:: console
-
-    myproject --help
-    myproject 4
-
-To help prevent uncustomized forks of gribnormalize from being uploaded to PyPI,
-I've configured the setup's upload command to dry run. Make sure to remove
-this configuration from
-`setup.cfg <https://docs.python.org/2/install/index.html#inst-config-syntax>`__
-when you customize gribnormalize.
-
-Please also note that the Travis-CI and Coveralls badge URLs and links in the README
-contain the string 'mapbox.' You'll need to change this to your own user or organization
-name and turn on the webhooks for your new project.
-
-A post on the Mapbox blog has more information about this project:
-https://www.mapbox.com/blog/gribnormalize/.
-
-See also
---------
-
-Here are a few other tools for initializing Python projects.
-
-- Paste Script's `paster create <http://pythonpaste.org/script/#paster-create>`__ is
-  one that I've used for a long time.
-- `cookiecutter-pypackage <https://github.com/audreyr/cookiecutter-pypackage>`__ is
-  a Cookiecutter template for a Python package. Cookiecutter supports many languages,
-  includes Travis configuration and much more.
-
+:console: `gribnormalize unwrap [OPTIONS] INGRIB OUTRASTER`
