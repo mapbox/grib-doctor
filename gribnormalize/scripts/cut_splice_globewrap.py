@@ -1,15 +1,14 @@
 import gribnormalize as gribnorm
 
-def upwrap_raster(inputRas, output):
+def upwrap_raster(inputRaster, outputRaster):
     import rasterio
-    from rasterio import crs
+
     with rasterio.drivers():
-        with rasterio.open(inputRas, 'r') as src:
-            ## Upsamples by zooming, slices array at the dateline, and stitches array to make a -180 to 180 extent array
+        with rasterio.open(inputRaster, 'r') as src:
             fixedArrays = list(gribnorm.handleArrays(i) for i in src.read())
             fixAff, bounds = gribnorm.updateBoundsAffine(src.affine)
 
-        with rasterio.open(output, 'w',
+        with rasterio.open(outputRaster, 'w',
             driver='GTiff',
             count=src.count,
             dtype=src.meta['dtype'],
