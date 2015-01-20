@@ -7,15 +7,15 @@ with codecs_open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 
-setup(name='gribnormalize',
-      version='0.0.3',
+setup(name='gribdoctor',
+      version='0.0.1',
       description=u"Utility functions for handling grib2s",
       long_description=long_description,
       classifiers=[],
       keywords='',
       author=u"Damon Burgett",
       author_email='damon@mapbox.com',
-      url='https://github.com/mapbox/grib-normalizer',
+      url='https://github.com/mapbox/grib-doctor',
       license='MIT',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
@@ -30,6 +30,6 @@ setup(name='gribnormalize',
       },
       entry_points="""
       [console_scripts]
-      gribnormalize=gribnormalize.scripts.cli:cli
+      gribdoctor=gribdoctor.scripts.cli:cli
       """
       )

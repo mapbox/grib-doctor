@@ -27,7 +27,7 @@ def rapclip(inputgrib, output, bidx, bandtags):
     '''
     Clips antimeridian-crossing RAP weather rasters
     '''
-    print bidx
+    click.echo('This subcommand is still in development.')
     # csg.upwrap_raster(inputgrib, output, bandtags)
 
 cli.add_command(rapclip)

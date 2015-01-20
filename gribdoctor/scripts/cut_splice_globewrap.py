@@ -1,4 +1,4 @@
-import gribnormalize as gribnorm
+import gribdoctor
 import click, json, numpy as np
 
 def upwrap_raster(inputRaster, outputRaster, bidx, bandtags):
@@ -11,13 +11,12 @@ def upwrap_raster(inputRaster, outputRaster, bidx, bandtags):
             else:
                 bandNos = list(int(i.replace(' ', '')) for i in bidx.split(','))
 
-            fixedArrays = list(gribnorm.handleArrays(src.read_band(i)) for i in bandNos)
+            fixedArrays = list(gribdoctor.handleArrays(src.read_band(i)) for i in bandNos)
 
-            fixAff, bounds = gribnorm.updateBoundsAffine(src.affine)
+            fixAff, bounds = gribdoctor.updateBoundsAffine(src.affine)
             if bandtags:
                 tags = list(src.tags(i + 1) for i in range(src.count))
                 click.echo(json.dumps(tags, indent=2))
-            print src.crs
 
         with rasterio.open(outputRaster, 'w',
             driver='GTiff',
