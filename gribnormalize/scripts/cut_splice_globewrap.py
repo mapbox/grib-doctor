@@ -17,6 +17,7 @@ def upwrap_raster(inputRaster, outputRaster, bidx, bandtags):
             if bandtags:
                 tags = list(src.tags(i + 1) for i in range(src.count))
                 click.echo(json.dumps(tags, indent=2))
+            print src.crs
 
         with rasterio.open(outputRaster, 'w',
             driver='GTiff',

@@ -1,4 +1,4 @@
-import cut_splice_globewrap as csg
+import cut_splice_globewrap as csg, click
 
 @click.group()
 def cli():
@@ -16,12 +16,18 @@ def unwrap(inputgrib, output, bidx, bandtags):
 
 cli.add_command(unwrap)
 
-# @click.command('clipdatecross')
-# @click.argument('inputgrib', type=str)
-# @click.argument('output', type=str)
-# @click.option('--bandtags', '-bt', is_flag=True,
-#     help='Flag to indicate printing of band tags / band metadata to stdout')
-# def clipdatecross(inputgrib, output, bandtags):
-#     csg.upwrap_raster(inputgrib, output, bandtags)
+@click.command('rapclip')
+@click.argument('inputgrib', type=str)
+@click.argument('output', type=str)
+@click.option('--bandtags', '-bt', is_flag=True,
+    help='Flag to indicate printing of band tags / band metadata to stdout')
+@click.option('--bidx', '-b', default='all',
+    help='Bands to include [default = all]')
+def rapclip(inputgrib, output, bidx, bandtags):
+    '''
+    Clips antimeridian-crossing RAP weather rasters
+    '''
+    print bidx
+    # csg.upwrap_raster(inputgrib, output, bandtags)
 
-cli.add_command(unwrap)
+cli.add_command(rapclip)
