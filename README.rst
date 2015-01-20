@@ -3,11 +3,15 @@ gribdoctor
 
 Utility functions for handling quirks of weather data rasters in `grib2` format
 
-Usage - unwrap
---------------
-
+Installation
+-------
 .. role:: console(code)
    :language: console
+
+:console:`pip install gribdoctor --pre`
+
+Usage - unwrap
+--------------
 
 :console:`gribdoctor unwrap [OPTIONS] INGRIB OUTRASTER`
 
