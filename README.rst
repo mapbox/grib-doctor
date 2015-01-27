@@ -19,3 +19,10 @@ OPTIONS
 
 Many gridded weather GRIBs, such as NOAA's `Global Forecast System (GFS) <http://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs>`_, cover a global extent of -0.5 to 359.5 (or similar, depending on resolution), with the antimeridian (-180 / 180) bisecting a column of pixels.
 This routine upsamples, slices, and merges these rasters as to convert them to "standard" -180 to 180 extent global grids. Outputs to any raster format supported by `rasterio <https://github.com/mapbox/rasterio>`_.
+
+Usage - smoosh
+--------------
+
+:console:`gribdoctor smoosh [INPUTS] OUTRASTER`
+
+Use this subcommand to "smoosh" together any number of (single band - for now) variable resolution gribs into one tiff. This also effectively performs the above :console:`globewrap` operation on all inputs, and outputs a raster of 2x (due to wrapping) the highest input resolution.

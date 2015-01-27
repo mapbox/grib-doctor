@@ -20,7 +20,7 @@ cli.add_command(unwrap)
 @click.argument('inputs', type=click.Path(exists=True), nargs=-1)
 @click.argument('output', type=click.Path(exists=False), nargs=1)
 def smoosh(inputs, output):
-    'stack two global gfs gribs of (possible) varying resolutions'
+    'stack multiple global gfs gribs of (possible) varying resolutions'
     csg.smoosh_rasters(inputs, output)
 
 cli.add_command(smoosh)
