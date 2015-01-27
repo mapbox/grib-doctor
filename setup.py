@@ -8,7 +8,7 @@ with codecs_open('README.rst', encoding='utf-8') as f:
 
 
 setup(name='gribdoctor',
-      version='0.0.1',
+      version='0.0.2',
       description=u"Utility functions for handling grib2s",
       long_description=long_description,
       classifiers=[],
