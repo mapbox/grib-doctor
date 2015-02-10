@@ -29,11 +29,11 @@ Usage - smoosh
 
 stack multiple gribs of the same or varying resolutions
 
-:console:`Usage: gribdoctor smoosh [OPTIONS] [INPUTS]... OUTPUT
+:console:`Usage: gribdoctor smoosh [OPTIONS] [INPUTS]... OUTPUT`
 
 Options:
-console:`-dev, --develoment  Dev tag for experimental features`
-console:`-uw, --unwrap       Unwrap GFS Rasters`
-console:`--help              Show this message and exit.`
+:console:`-dev, --develoment  Dev tag for experimental features`
+:console:`-uw, --unwrap       Unwrap GFS Rasters`
+:console:`--help              Show this message and exit.`
 
 Use this subcommand to "smoosh" together any number of (single band - for now) variable resolution gribs into one tiff. This also effectively performs the above :console:`globewrap` operation on all inputs, and outputs a raster of 2x (due to wrapping) the highest input resolution.
