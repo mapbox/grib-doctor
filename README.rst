@@ -25,7 +25,7 @@ OPTIONS:
 
 :console:`--help              Show this message and exit.`
 
-Use this subcommand to "smoosh" together any number of (single band - for now) variable resolution gribs into one tiff. This also effectively performs the below :console:`globewrap` operation on all inputs, and outputs a raster of 2x (due to wrapping) the highest input resolution.
+Use this subcommand to "smoosh" together any number of variable resolution gribs into one tiff. This also effectively performs the below :console:`globewrap` operation on all inputs if indicated with :console:`--unwrap`, and outputs a raster of 2x (due to unwrapping) the highest input resolution.
 
 Usage - unwrap
 --------------
