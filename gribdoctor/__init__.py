@@ -29,7 +29,8 @@ def loadRasterInfo(inputRaster):
             'shape': src.shape,
             'affine': src.affine,
             'dtype': src.meta['dtype'],
-            'crs': src.crs
+            'crs': src.crs,
+            'kwargs': src.meta.copy()
         }
 
 def getSnapDims(rasInfo):
@@ -50,6 +51,17 @@ def getSnapAffine(rasInfo, snapshape):
         'crs': i['crs']
         } for i in rasInfo}
     return rasMap[snapshape]
+
+def makeKwargs(bandNos, sMeta, sShape, zoomfactor):
+    return {
+        'driver': 'GTiff',
+        'count': len(bandNos),
+        'dtype': sMeta['dtype'],
+        'height': sShape[0] * zoomfactor,
+        'width': sShape[1] * zoomfactor,
+        'transform': sMeta['affine'],
+        'crs': sMeta['crs']
+    }
 
 def handleBands(data, snapshape):
     import numpy as np

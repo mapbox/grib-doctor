@@ -38,28 +38,25 @@ def smoosh_rasters(inputRasters, outputRaster):
     if abs(rasInfo[0]['affine'].c) > 360:
         gfs = False
         zoomFactor = 1
+        kwargs = rasInfo[0]['kwargs']
     else:
         gfs = True
-        print gfs
         zoomFactor = 2
-    snapShape = gribdoctor.getSnapDims(rasInfo)
 
+    snapShape = gribdoctor.getSnapDims(rasInfo)
     snapSrc = gribdoctor.getSnapAffine(rasInfo, snapShape)
 
     allBands = list(gribdoctor.loadBands(b, snapShape, gfs) for b in inputRasters)
     
     allBands = list(b for sub in allBands for b in sub)
 
-    print allBands[0].shape
+    if gfs:
+        kwargs = gribdoctor.makeKwargs(allBands, snapSrc, snapShape, zoomFactor)
+    else:
+        kwargs['count'] = len(allBands)
+        kwargs['driver'] = 'GTiff'
+
     with rasterio.drivers():
-        with rasterio.open(outputRaster, 'w',
-            driver='GTiff',
-            count=len(allBands),
-            dtype=snapSrc['dtype'],
-            height=snapShape[0] * zoomFactor,
-            width=snapShape[1] * zoomFactor,
-            transform=snapSrc['affine'],
-            crs=snapSrc['crs']
-            ) as dst:
+        with rasterio.open(outputRaster, 'w', **kwargs) as dst:
             for i, b in enumerate(allBands):
                 dst.write_band(i + 1, b)
