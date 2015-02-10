@@ -30,18 +30,16 @@ def upwrap_raster(inputRaster, outputRaster, bidx, bandtags):
             for i, b in enumerate(fixedArrays):
                 dst.write_band(i + 1, b)
 
-def smoosh_rasters(inputRasters, outputRaster):
+def smoosh_rasters(inputRasters, outputRaster, gfs, development):
     import rasterio
 
     rasInfo = list(gribdoctor.loadRasterInfo(b) for b in inputRasters)
-   
-    if abs(rasInfo[0]['affine'].c) > 360:
+    
+    if abs(rasInfo[0]['affine'].c) > 360 and development == True:
         gfs = False
-        zoomFactor = 1
         kwargs = rasInfo[0]['kwargs']
-    else:
+    elif development == True:
         gfs = True
-        zoomFactor = 2
 
     snapShape = gribdoctor.getSnapDims(rasInfo)
     snapSrc = gribdoctor.getSnapAffine(rasInfo, snapShape)
@@ -51,8 +49,10 @@ def smoosh_rasters(inputRasters, outputRaster):
     allBands = list(b for sub in allBands for b in sub)
 
     if gfs:
+        zoomFactor = 2
         kwargs = gribdoctor.makeKwargs(allBands, snapSrc, snapShape, zoomFactor)
     else:
+        zoomFactor = 1
         kwargs['count'] = len(allBands)
         kwargs['driver'] = 'GTiff'
 
