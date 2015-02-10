@@ -39,15 +39,22 @@ def smoosh_rasters(inputRasters, outputRaster):
 
     snapSrc = gribdoctor.getSnapAffine(rasInfo, snapShape)
 
-    allBands = list(gribdoctor.loadBands(b, snapShape) for b in inputRasters)
+    allBands = list(gribdoctor.loadBands(b, snapShape, False) for b in inputRasters)
+    
+    allBands = list(b for sub in allBands for b in sub)
+    print allBands
 
+    zoomFactor = 1
+    print snapShape
+
+    print allBands[0].shape
     with rasterio.drivers():
         with rasterio.open(outputRaster, 'w',
             driver='GTiff',
             count=len(allBands),
             dtype=snapSrc['dtype'],
-            height=snapShape[0] * 2,
-            width=snapShape[1] * 2,
+            height=snapShape[0] * zoomFactor,
+            width=snapShape[1] * zoomFactor,
             transform=snapSrc['affine'],
             crs=snapSrc['crs']
             ) as dst:
