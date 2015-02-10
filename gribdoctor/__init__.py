@@ -51,7 +51,7 @@ def getSnapAffine(rasInfo, snapshape):
         } for i in rasInfo}
     return rasMap[snapshape]
 
-def handleGFS(data, snapshape):
+def handleBands(data, snapshape):
     import numpy as np
     from scipy.ndimage import zoom
     try:
@@ -73,7 +73,6 @@ def loadBands(inputRaster, snapshape, gfs):
     import rasterio
     with rasterio.drivers():
         with rasterio.open(inputRaster, 'r') as src:
-            gfs = False
             if gfs:
                 return list(handleBands(src.read_band(i), snapshape) for i in range(1, src.count + 1))
             else:
