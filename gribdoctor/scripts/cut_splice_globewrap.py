@@ -32,6 +32,7 @@ def upwrap_raster(inputRaster, outputRaster, bidx, bandtags):
 
 def smoosh_rasters(inputRasters, outputRaster, gfs, development):
     import rasterio
+    import numpy as np
 
     rasInfo = list(gribdoctor.loadRasterInfo(b) for b in inputRasters)
     

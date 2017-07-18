@@ -53,6 +53,7 @@ def getSnapAffine(rasInfo, snapshape):
     return rasMap[snapshape]
 
 def makeKwargs(bandNos, sMeta, sShape, zoomfactor):
+    import numpy as np
     return {
         'driver': 'GTiff',
         'count': len(bandNos),
@@ -60,7 +61,12 @@ def makeKwargs(bandNos, sMeta, sShape, zoomfactor):
         'height': sShape[0] * zoomfactor,
         'width': sShape[1] * zoomfactor,
         'transform': sMeta['affine'],
-        'crs': sMeta['crs']
+        'crs': sMeta['crs'],
+        'compress': 'deflate',
+        'tiled': True,
+        'blockxsize': 512,
+        'blockysize': 512,
+        'dtype': np.float64
     }
 
 def handleBands(data, snapshape):
@@ -86,6 +92,6 @@ def loadBands(inputRaster, snapshape, gfs):
     with rasterio.drivers():
         with rasterio.open(inputRaster, 'r') as src:
             if gfs:
-                return list(handleBands(src.read_band(i), snapshape) for i in range(1, src.count + 1))
+                return list(handleBands(src.read(i), snapshape) for i in range(1, src.count + 1))
             else:
                 return list(src.read())
