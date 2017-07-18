@@ -4,7 +4,7 @@ def handleArrays(gribArr):
 
     gribArr = zoom(gribArr, 2, order=1)
     oshape = gribArr.shape
-    fixGrib = np.hstack((gribArr[:, oshape[1] / 2 + 1:oshape[1]],gribArr[:, 0:oshape[1] / 2 + 1]))
+    fixGrib = np.hstack((gribArr[:, int(oshape[1] / 2 + 1):oshape[1]],gribArr[:, 0:int(oshape[1] / 2 + 1)]))
 
     return fixGrib
 
