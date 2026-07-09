@@ -3,17 +3,19 @@ import click, json, numpy as np
 
 def upwrap_raster(inputRaster, outputRaster, bidx, bandtags):
     import rasterio
+    import rasterio.env
 
-    with rasterio.drivers():
+    with rasterio.Env():
         with rasterio.open(inputRaster, 'r') as src:
+            print(src)
             if bidx == 'all':
                 bandNos = np.arange(src.count) + 1
             else:
                 bandNos = list(int(i.replace(' ', '')) for i in bidx.split(','))
 
-            fixedArrays = list(gribdoctor.handleArrays(src.read_band(i)) for i in bandNos)
+            fixedArrays = list(gribdoctor.handleArrays(src.read(i)) for i in bandNos)
 
-            fixAff = gribdoctor.updateBoundsAffine(src.affine)
+            fixAff = gribdoctor.updateBoundsAffine(src.transform)
             if bandtags:
                 tags = list(src.tags(i + 1) for i in range(src.count))
                 click.echo(json.dumps(tags, indent=2))
@@ -32,6 +34,13 @@ def upwrap_raster(inputRaster, outputRaster, bidx, bandtags):
 
 def smoosh_rasters(inputRasters, outputRaster, gfs, development):
     import rasterio
+    import rasterio.env
+    import numpy as np
+    
+    # if isinstance(inputRasters, list):
+    #     pass
+    # else:
+    #     inputRasters = [inputRasters]
 
     rasInfo = list(gribdoctor.loadRasterInfo(b) for b in inputRasters)
     
@@ -56,7 +65,7 @@ def smoosh_rasters(inputRasters, outputRaster, gfs, development):
         kwargs['count'] = len(allBands)
         kwargs['driver'] = 'GTiff'
 
-    with rasterio.drivers():
+    with rasterio.Env():
         with rasterio.open(outputRaster, 'w', **kwargs) as dst:
             for i, b in enumerate(allBands):
                 dst.write_band(i + 1, b)

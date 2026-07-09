@@ -1,0 +1,12 @@
+package:
+  name: grib-doctor
+  version: 1
+
+build:
+  number: 1
+
+requirements:
+  run:
+    - python
+about:
+  summary: gribdoctor updated to work with latest rasterio

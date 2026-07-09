@@ -7,8 +7,16 @@ Installation
 -------
 .. role:: console(code)
    :language: console
+Using Anaconda w/ py38 env on Ubuntu x64
+:console:`conda install gdal` (gdal 3.0.2)
+:console:`pip install rasterio` (rasterio 1.1.2)
+:console:`git clone https://github.com/laterdude/grib-doctor.git && cd ./grib-doctor && python -m setup install --force`
 
-:console:`pip install gribdoctor --pre`
+you may find memory issues occur w/ numpy arrays, if 
+:console:`$ cat /proc/sys/vm/overcommit_memory`
+:console:`0`
+then as root run:
+:console:`$ echo 1 > /proc/sys/vm/overcommit_memory`
 
 Usage - smoosh
 --------------

@@ -4,7 +4,7 @@ def handleArrays(gribArr):
 
     gribArr = zoom(gribArr, 2, order=1)
     oshape = gribArr.shape
-    fixGrib = np.hstack((gribArr[:, oshape[1] / 2 + 1:oshape[1]],gribArr[:, 0:oshape[1] / 2 + 1]))
+    fixGrib = np.hstack((gribArr[:, int(oshape[1] / 2 + 1):oshape[1]],gribArr[:, 0:int(oshape[1] / 2 + 1)]))
 
     return fixGrib
 
@@ -27,7 +27,7 @@ def loadRasterInfo(inputRaster):
     with rasterio.open(inputRaster, 'r') as src:
         return {
             'shape': src.shape,
-            'affine': src.affine,
+            'affine': src.transform,
             'dtype': src.meta['dtype'],
             'crs': src.crs,
             'kwargs': src.meta.copy()
@@ -53,6 +53,7 @@ def getSnapAffine(rasInfo, snapshape):
     return rasMap[snapshape]
 
 def makeKwargs(bandNos, sMeta, sShape, zoomfactor):
+    import numpy as np
     return {
         'driver': 'GTiff',
         'count': len(bandNos),
@@ -60,7 +61,12 @@ def makeKwargs(bandNos, sMeta, sShape, zoomfactor):
         'height': sShape[0] * zoomfactor,
         'width': sShape[1] * zoomfactor,
         'transform': sMeta['affine'],
-        'crs': sMeta['crs']
+        'crs': sMeta['crs'],
+        'compress': 'deflate',  
+        'tiled': True,  
+        'blockxsize': 512,  
+        'blockysize': 512,  
+        'dtype': np.float64
     }
 
 def handleBands(data, snapshape):
@@ -83,9 +89,10 @@ def handleBands(data, snapshape):
 
 def loadBands(inputRaster, snapshape, gfs):
     import rasterio
-    with rasterio.drivers():
+    import rasterio.env
+    with rasterio.Env():
         with rasterio.open(inputRaster, 'r') as src:
             if gfs:
-                return list(handleBands(src.read_band(i), snapshape) for i in range(1, src.count + 1))
+                return list(handleBands(src.read(i), snapshape) for i in range(1, src.count + 1))
             else:
                 return list(src.read())

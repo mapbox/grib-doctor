@@ -1,4 +1,5 @@
-import cut_splice_globewrap as csg, click
+from gribdoctor.scripts import cut_splice_globewrap as csg	
+import click
 
 @click.group()
 def cli():
@@ -24,7 +25,7 @@ cli.add_command(unwrap)
 @click.option('--unwrap', '-uw', is_flag=True, default=True,
     help='Unwrap GFS Rasters')
 def smoosh(inputs, output, develoment, unwrap):
-    'stack multiple global gfs gribs of (possible) varying resolutions'
+    'stack multiple gribs of the same or varying resolutions'
     csg.smoosh_rasters(inputs, output, unwrap, develoment)
 
 cli.add_command(smoosh)
